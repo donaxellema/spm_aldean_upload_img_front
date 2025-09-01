@@ -1,0 +1,70 @@
+
+   <h2>SUBIR ARCHIVO EXCEL!</h2>
+   <br>
+
+   <div class="upload-container">
+
+
+  <div class="upload-box" cdkDrag (click)="fileInput.click()"
+       [class.dragover]="isDragOver"
+       [class.disabled]="isLoading" 
+       (drop)="onFileDropped($event)"
+       (dragover)="onDragOver($event)" 
+       (dragleave)="onDragLeave($event)">
+    <mat-icon>upload</mat-icon>
+    
+    <!-- Texto y estados -->
+    @if(!fileName){
+        <p (click)="fileInput.click()">Arrastra tu archivo o haz clic aquí</p>
+    }
+
+    <input type="file" accept=".xlsx, .xls" (change)="onFileSelected($event)" hidden #fileInput
+    [disabled]="isLoading">
+    <!-- <input type="file" accept=".xlsx, .xls" (change)="fileBrowseHandler($event)" hidden #fileInput> -->
+    <!-- @if(fileName){ -->
+    
+  </div>
+
+
+
+
+
+  <div class="text-aling">
+    @if(archivoSeleccionado){
+        <p>{{archivoSeleccionado.name}}</p>
+        <br>
+        
+        <div class="buttons">
+            @if(actProcess==false){
+            <button mat-raised-button color="primary"
+                    (click)="onUpload(); $event.stopPropagation()"
+                    [disabled]="isLoading">
+            Procesar
+            </button>
+            }
+
+            @if(actProcess){
+                <button mat-raised-button color="warn" 
+                            (click)="removeFile(); $event.stopPropagation()">
+                        Eliminar y cargar nuevo archivo
+                </button>
+            }
+
+            <!-- Barra de progreso -->
+        </div>
+    }
+    
+    @if(isLoading){
+        <mat-progress-bar
+        mode="indeterminate"
+        color="primary">
+       </mat-progress-bar>
+   }
+
+    <p>{{ mensaje }}</p>
+    
+  </div>
+
+
+</div>
+
